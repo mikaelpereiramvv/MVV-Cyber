@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#0c2a1e" />
   <title>Mina Serrote · Operação Escudo Verde (RA Web)</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -802,7 +802,7 @@
       background-color: var(--dz-paper);
       background-image: linear-gradient(90deg, transparent 0 22px, rgba(179,38,30,.22) 22px 23px, transparent 23px), linear-gradient(transparent 0 31px, var(--dz-rule) 31px 32px);
       background-size: 100% 100%, 100% 32px; background-attachment: local;
-      box-shadow: 0 14px 40px rgba(0,0,0,.7), inset 0 0 60px rgba(120,90,40,.12); padding: 18px 16px 18px 32px;
+      box-shadow: 0 14px 40px rgba(0,0,0,.7); padding: 18px 16px 18px 32px;
     }
     .sheet-head { border-bottom: 3px double var(--dz-ink); padding-bottom: 10px; }
     .sheet-head h3 { font-family: var(--dz-type); font-weight: 400; color: var(--dz-ink); font-size: 21px; line-height: 1.2; letter-spacing: 0; }
@@ -931,8 +931,147 @@
     .hud-bottom .pill-group > span { padding: 0 2px !important; font-size: 10px !important; }
     .toast { top: 134px; }
     .grade { flex: none; line-height: 1; padding-top: 4px; }
+
+    /* ===================================================================
+       v19 · POLIMENTO DO DOSSIÊ (audit Impeccable + Vercel Guidelines)
+       =================================================================== */
+    html { -webkit-text-size-adjust: 100%; }
+    button, .hs, .ct-tab, .cartnote { touch-action: manipulation; }
+    .modal, .sheet { overscroll-behavior: contain; }
+    .sheet { box-shadow: 0 14px 40px rgba(0,0,0,.7);
+      background-image: linear-gradient(90deg, transparent 0 22px, rgba(179,38,30,.18) 22px 23px, transparent 23px), linear-gradient(transparent 0 31px, rgba(43,38,32,.06) 31px 32px); }
+    .meter-lbl span:last-child { color: #8f1d16; }
+    .meter-lbl, .tw-timer, .grade, [data-cd], [data-clock], [data-count], #btnStatus { font-variant-numeric: tabular-nums; }
+    .badge-probe, .hud-bottom .pill-group > span, .tw-tag small, .rs-m small, .rs-radio small, .alf-bub small,
+    .cin-tag, .alf-h small, .alf-st, .alf-lv small, .alf-gauge small, .evid-t > small { font-size: 11px !important; }
+    .rs-m small { line-height: 1.25; }
+    .badge-probe { padding: 3px 8px; }
+    .sheet-head h3, .splash-card h2 { text-wrap: balance; }
+    .sheet .sit, .tw-narr, .crfb, .okline, .stepfb { text-wrap: pretty; }
+    .hs:focus-visible { outline: 3px solid var(--dz-gold) !important; outline-offset: 3px; }
+    .sheet-head { position: relative; }
+
+    /* número do caso: etiqueta datilografada */
+    .dz-case { display: table; margin: 0 0 5px; padding: 1px 7px; font: 400 12px var(--dz-type); letter-spacing: 1.5px; color: var(--dz-ink);
+      border: 1.5px solid var(--dz-ink); background: rgba(255,255,255,.4); transform: rotate(-1.2deg); }
+    .dz-case.red { color: var(--dz-red); border-color: var(--dz-red); }
+
+    /* reviravolta mais enxuta: retorno anterior e nota da cartilha compactos */
+    .okline { font-size: 13px; padding: 7px 10px; }
+    .okline::after { font-size: 11px; top: -9px; }
+    .cartnote { position: relative; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; cursor: pointer; padding-right: 30px; }
+    .cartnote::after { content: "+"; position: absolute; right: 9px; top: 5px; font: 700 18px var(--dz-sans); color: var(--dz-gold); }
+    .cartnote.open { display: block; -webkit-line-clamp: unset; } .cartnote.open::after { content: "−"; }
+    .tw-timer { border-radius: 0 !important; }
+
+    /* ===== Protocolo de Incidente: investigação → ataque ===== */
+    #dzInc { position: fixed; inset: 0; z-index: 60; display: none; }
+    #dzInc.on { display: block; }
+    #dzInc.hold { pointer-events: none; }
+    #dzInc .vig { position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 45%, transparent 30%, rgba(110,8,4,.62) 100%); animation: dzFadeIn .45s ease-out .12s both; }
+    #dzInc.hold .vig { opacity: .45; transition: opacity .6s ease; }
+    #dzInc .scan { position: absolute; inset: 0; background: repeating-linear-gradient(0deg, rgba(255,255,255,.06) 0 1px, transparent 1px 3px); opacity: 0; animation: dzFlash .42s steps(3) .4s; }
+    #dzInc .bar { position: absolute; left: 0; right: 0; top: 0; display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 2px 12px;
+      padding: calc(env(safe-area-inset-top, 0px) + 10px) 14px 9px; background: var(--dz-red); color: #fff; box-shadow: 0 8px 20px rgba(0,0,0,.5);
+      border-bottom: 5px solid #111; border-image: repeating-linear-gradient(-45deg, #111 0 8px, #f2b51c 8px 16px) 5;
+      animation: dzBar .34s cubic-bezier(.16,1,.3,1) 1.05s both; }
+    #dzInc .bar b { font: 400 15px var(--dz-type); letter-spacing: 1.6px; }
+    #dzInc .bar .clk { font: 600 15px var(--dz-mono); font-variant-numeric: tabular-nums; }
+    #dzInc .bar small { flex-basis: 100%; font: 600 11px var(--dz-mono); letter-spacing: .4px; opacity: .92; }
+    #dzInc .skip { position: absolute; left: 0; right: 0; bottom: calc(env(safe-area-inset-bottom, 0px) + 18px); text-align: center; font: 600 12px var(--dz-sans); letter-spacing: 1.5px; text-transform: uppercase; color: rgba(255,255,255,.75); animation: dzFadeIn .3s ease-out .5s both; }
+    #dzInc.hold .skip { display: none; }
+    body.dz-inc .modal { padding-top: 78px; }
+    @keyframes dzFadeIn { from { opacity: 0; } }
+    @keyframes dzFlash { 0% { opacity: 1; } 100% { opacity: 0; } }
+    @keyframes dzBar { from { transform: translateY(-110%); } }
+
+    /* 1 · decisão: carimbo EXECUTADO no botão escolhido */
+    .dz-exec { position: relative; }
+    .dz-exec::before { content: "EXECUTADO"; position: absolute; right: 10px; top: 50%; z-index: 2; padding: 0 6px; font: 400 14px var(--dz-type); letter-spacing: 2px;
+      color: var(--dz-red); border: 2px solid var(--dz-red); background: rgba(251,247,236,.92); opacity: .95; transform: translateY(-50%) rotate(-8deg);
+      animation: dzStampIn .22s cubic-bezier(.2,.8,.3,1) both; pointer-events: none; }
+    @keyframes dzStampIn { from { opacity: 0; transform: translateY(-50%) rotate(-8deg) scale(1.7); } }
+
+    /* 2 · corte: a ficha perde foco, só o aparelho atacado continua nítido e falha */
+    #sheet.dz-cut > * { filter: grayscale(1) blur(1.6px); opacity: .42; transition: filter .3s ease, opacity .3s ease; }
+    #sheet.dz-cut > :is(.mock-wrap, .tw-dev) { filter: none; opacity: 1; animation: dzGlitch .62s steps(1) .28s both; }
+    @keyframes dzGlitch {
+      0% { transform: none; clip-path: none; }
+      14% { transform: translate(-5px, 1px); clip-path: inset(8% 0 58% 0); filter: hue-rotate(-50deg) saturate(2.4); }
+      28% { transform: translate(6px, -2px); clip-path: inset(46% 0 22% 0); filter: none; }
+      42% { transform: translate(-2px, 0); clip-path: inset(0 0 78% 0); filter: brightness(1.7); }
+      56% { transform: translate(4px, 2px); clip-path: inset(70% 0 4% 0); filter: hue-rotate(40deg); }
+      70% { transform: none; clip-path: none; filter: brightness(2.2) contrast(1.4); }
+      100% { transform: none; clip-path: none; filter: none; } }
+
+    /* 3 · ruptura: a tela do ataque abre como uma fresta, a ficha treme e recebe o carimbo */
+    #sheet.dz-breach { animation: dzShake .34s ease-out; }
+    @keyframes dzShake { 20% { transform: translateX(-6px); } 40% { transform: translateX(5px); } 60% { transform: translateX(-3px); } 80% { transform: translateX(2px); } }
+    #sheet.dz-breach > :is(.cin, .crx, .cr) { animation: dzReveal .56s cubic-bezier(.16,1,.3,1) both; }
+    @keyframes dzReveal { from { clip-path: inset(47% 0 47% 0); filter: brightness(2.4); } 60% { filter: brightness(1.15); } to { clip-path: inset(0); filter: none; } }
+    .dz-comp { position: absolute; right: 4px; bottom: -15px; z-index: 2; padding: 1px 9px; font: 400 17px var(--dz-type); letter-spacing: 2px; color: var(--dz-red);
+      border: 3px solid var(--dz-red); background: rgba(241,233,214,.85); opacity: .9; transform: rotate(-6deg); animation: dzThud .26s cubic-bezier(.2,.8,.3,1) .32s both; pointer-events: none; }
+    @keyframes dzThud { from { opacity: 0; transform: rotate(-6deg) scale(2.3); } }
+
+    /* movimento reduzido: sem deslocamento e sem loops, mantendo estado e cor */
+    @media (prefers-reduced-motion: reduce) {
+      .ar-pin .dot, .hs .ping, .tw-actor, .cc-img, .cc-alarm, .mission-bar.alert, .bx2, .tw-bg, .ph-banner img, body.alert-on #fxVig, .mock-wrap.boot, .toast { animation: none !important; }
+      #sheet.dz-breach, #sheet.dz-cut > :is(.mock-wrap, .tw-dev) { animation: none !important; }
+      #sheet.dz-cut > * { filter: grayscale(1); }
+      #sheet.dz-breach > :is(.cin, .crx, .cr), #dzInc .bar, .dz-exec::before, .dz-comp { animation: dzFadeIn .18s ease-out both !important; }
+      #dzInc .scan { display: none; }
+    }
+    .cartnote { padding-bottom: 0; border-bottom: 8px solid var(--dz-card); }
+
+    /* botão de voz: ícone desenhado (alto-falante / pausa) em vez de emoji */
+    .tw-play { font-size: 0 !important; display: grid; place-items: center; color: #fff; }
+    .tw-play::before { content: ""; width: 15px; height: 15px; background: currentColor;
+      -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.6' stroke-linejoin='round' stroke-linecap='round'%3E%3Cpath d='M4 9h4l5-4v14l-5-4H4z' fill='black'/%3E%3Cpath d='M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12'/%3E%3C/svg%3E") center / contain no-repeat;
+              mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.6' stroke-linejoin='round' stroke-linecap='round'%3E%3Cpath d='M4 9h4l5-4v14l-5-4H4z' fill='black'/%3E%3Cpath d='M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12'/%3E%3C/svg%3E") center / contain no-repeat; }
+    .tw-play[aria-pressed="true"]::before {
+      -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect x='6' y='5' width='4' height='14' fill='black'/%3E%3Crect x='14' y='5' width='4' height='14' fill='black'/%3E%3C/svg%3E") center / contain no-repeat;
+              mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect x='6' y='5' width='4' height='14' fill='black'/%3E%3Crect x='14' y='5' width='4' height='14' fill='black'/%3E%3C/svg%3E") center / contain no-repeat; }
+
+    /* capa do dossiê na abertura */
+    .splash-card::after { content: "USO INTERNO"; position: absolute; right: 16px; top: 18px; padding: 1px 8px; font: 400 14px var(--dz-type); letter-spacing: 2px;
+      color: var(--dz-red); border: 2.5px solid var(--dz-red); transform: rotate(7deg); opacity: .8; mix-blend-mode: multiply; pointer-events: none; }
+    .splash-card #btnStartAR { font-size: 16px !important; }
+
+    /* briefing: foto 3x4 do Sérgio presa ao lado da fala */
+    .brief { align-items: flex-start; }
+    .brief .rs-av { width: 70px !important; height: 84px !important; border-radius: 0; box-shadow: 0 0 0 4px #fbf7ec, 0 4px 10px rgba(0,0,0,.35); transform: rotate(-3deg); margin: 6px 4px 0; }
+    .brief .rs-av img { width: 100%; height: 100%; object-fit: cover; }
+    .brief-say small { display: block; margin-bottom: 4px; font: 700 11px var(--dz-sans); letter-spacing: 1.2px; text-transform: uppercase; color: var(--dz-red); }
+    .brief-say small b { color: var(--dz-ink); }
 </style>
 <script>window.DZ_IC = {"moon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linejoin=\"round\"><path d=\"M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5z\"/></svg>", "sun": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linecap=\"round\"><circle cx=\"12\" cy=\"12\" r=\"4.2\"/><path d=\"M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8\"/></svg>", "snd": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M4 9h4l5-4v14l-5-4H4z\"/><path d=\"M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12\"/></svg>", "mute": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M4 9h4l5-4v14l-5-4H4z\"/><path d=\"M17 9l5 6M22 9l-5 6\"/></svg>", "book": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linejoin=\"round\"><path d=\"M5 3h12a2 2 0 0 1 2 2v16H7a2 2 0 0 1-2-2z\"/><path d=\"M5 17a2 2 0 0 1 2-2h12M9 7h6\"/></svg>", "gyro": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"m15.5 8.5-2 5-5 2 2-5z\"/></svg>"};</script>
+<script>
+window.dzCase = function (sc) { var L = window.SCENARIOS || [], i = -1; for (var k = 0; k < L.length; k++) if (L[k] === sc || L[k].id === sc.id) { i = k; break; } return 'MVV-' + String(411 + Math.max(0, i)).padStart(4, '0'); };
+window.dzIncident = function (sc, fb, raw) {
+  var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var sheet = document.getElementById('sheet'), modal = document.getElementById('modal');
+  var open = modal && !modal.hidden && sheet && sheet.children.length > 0;
+  var ov = document.getElementById('dzInc');
+  if (!ov) { ov = document.createElement('div'); ov.id = 'dzInc'; document.body.appendChild(ov); }
+  var sev = ({ ransomware: 1, wiper: 1, scada: 1 })[sc.attackType] ? 'SEV-1' : 'SEV-2';
+  var esc = function (t) { return String(t).replace(/[&<>]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]; }); };
+  ov.innerHTML = '<div class="vig"></div><div class="scan"></div><div class="bar" role="alert"><b>INCIDENTE · ' + dzCase(sc).replace('MVV', 'INC') + ' · ' + sev + '</b><span class="clk"></span><small>' + esc(sc.building) + ' · estação de ' + esc(sc.npc) + '</small></div><div class="skip">Toque para pular</div>';
+  var clk = ov.querySelector('.clk'), fmt = new Intl.DateTimeFormat('pt-BR', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
+  var tick = function () { clk.textContent = fmt.format(new Date()); }; tick();
+  ov.className = 'on'; document.body.classList.add('dz-inc');
+  if (open) { var p = sheet.querySelector('.tw-act.pressed, .act.pressed, .opt.pressed, .pressed'); if (p) p.classList.add('dz-exec'); sheet.classList.add('dz-cut'); }
+  var done = false;
+  var fire = function () {
+    if (done) return; done = true; sheet.classList.remove('dz-cut'); raw(sc, fb);
+    sheet.classList.remove('dz-breach'); void sheet.offsetWidth; sheet.classList.add('dz-breach');
+    var h = sheet.querySelector('.sheet-head'); if (h && !h.querySelector('.dz-comp')) { var s = document.createElement('span'); s.className = 'dz-comp'; s.textContent = 'COMPROMETIDO'; h.appendChild(s); }
+    ov.classList.add('hold'); sheet.scrollTop = 0;
+  };
+  ov.onclick = fire;
+  setTimeout(fire, reduce ? 120 : (open ? 900 : 450));
+  var iv = setInterval(function () { tick(); if (done && modal.hidden) { clearInterval(iv); ov.className = ''; ov.innerHTML = ''; document.body.classList.remove('dz-inc'); } }, 250);
+};
+</script>
 </head>
 <body>
 
@@ -2816,7 +2955,7 @@ function openScenarioModal(sc) {
     const dets = sc.hotspots.filter((h) => found.has(h.id));
     $('#sheet').innerHTML = `
       <div class="sheet-head">
-        <div class="sh-who"><span class="rs-av sm">${sc.id === 'beatriz' ? '<img class="face" src="${SERGIO_FACE}" alt="Sérgio">' : victAv(sc.id)}</span><div><span class="eyebrow">${sc.building} · ${sc.npc} (${sc.role})</span><h3>${sc.title}</h3></div></div>
+        <div class="sh-who"><span class="rs-av sm">${sc.id === 'beatriz' ? '<img class="face" src="${SERGIO_FACE}" alt="Sérgio">' : victAv(sc.id)}</span><div><span class="dz-case">Caso nº ${dzCase(sc)}</span><span class="eyebrow">${sc.building} · ${sc.npc} (${sc.role})</span><h3>${sc.title}</h3></div></div>
         <button class="btn" id="closeModal" type="button">✕</button>
       </div>
       <p class="sit">${sc.situation}</p>
@@ -3303,7 +3442,8 @@ function completeScenario(sc, feedback) {
   STATE.completed[sc.id] = true; $('#modal').hidden = true; hideHolo(); updateHUD(); buildPins(); fxSuccess(sc); maybeService();
   if (Object.keys(STATE.completed).length >= SCENARIOS.length) setTimeout(openCertificateModal, 1600); else showToast('✅ ' + feedback);
 }
-function showCrisis(sc, feedback) {
+function showCrisis(sc, feedback) { return window.dzIncident(sc, feedback, _dzCrisisRaw); }
+function _dzCrisisRaw(sc, feedback) {
   hideHolo(); sfx('scan'); buzz([80, 60, 80]);
   $('#sheet').innerHTML = `<div class="sheet-head"><div><span class="eyebrow" style="color:var(--bad)">⚠ O que aconteceu na tela de ${sc.npc}</span><h3>Você tomou essa decisão…</h3></div></div>
     ${CRISIS[sc.attackType](sc)}<p class="sit crfb">${feedback}</p><button class="btn danger" id="crGo" type="button">Ver o impacto na maquete ▶</button>`;
@@ -3532,7 +3672,7 @@ function openService(ev) {
 function openTwist(sc, prevFeedback) {
   const tw = sc.twist, T = TWS[sc.id]; hideHolo(); sfx('open');
   const acts = shuf(T.acts).map(([ic, lb, k]) => `<button type="button" class="tw-act" data-t="${k}"><span>${ic}</span>${lb}</button>`).join('');
-  $('#sheet').innerHTML = `<div class="sheet-head"><div><span class="eyebrow">⏱ Mais tarde · ${tw.clock} · ${sc.building}</span><h3>Nova situação com ${sc.npc}</h3></div></div>
+  $('#sheet').innerHTML = `<div class="sheet-head"><div><span class="dz-case">Caso nº ${dzCase(sc)}</span><span class="eyebrow">⏱ Mais tarde · ${tw.clock} · ${sc.building}</span><h3>Nova situação com ${sc.npc}</h3></div></div>
     <div class="okline">✅ ${prevFeedback}</div>${CART[sc.id] ? `<div class="cartnote">📘 <b>Nosso Jeito de Operar:</b> ${CART[sc.id]}</div>` : ''}<p class="tw-narr">${T.narr}</p>
     ${TWIMG[sc.id] ? `<div class="tw-stage ph">${TWVID[sc.id] ? `<video class="tw-bg" src="${TWVID[sc.id].v}" poster="${TWVID[sc.id].p}" autoplay muted playsinline loop></video>` : `<img class="tw-bg" src="${TWIMG[sc.id]}" alt="">`}${T.scene().replace(/<div class="tw-actor">[\s\S]*?<\/svg><\/div>/, '')}</div>` : `<div class="tw-stage st-${T.stage.split(':')[0]}">${STAGE(T.stage)}${T.scene()}</div>`}
     <div class="tw-dev">${T.dev()}</div>
@@ -3580,7 +3720,7 @@ function openRemediationModal(sc) {
     const i = a.pb.i, st = pb.steps[i], R = RESP[Math.min(i, 2)], L = RLAB[sc.attackType][i];
     const isC = i === 1 && VOICES['c_' + sc.attackType], cv = 'c_' + sc.attackType;
     const q = st.q.replace(/^\S+\s+\d\/\d\s+·\s+/, '').replace(/^[A-ZÇÃÕÉÍÓÚÂÊÔ ]+:\s*/, ''), stage = (st.q.match(/\d\/\d\s+·\s+([A-ZÇÃÉÍÓÚÂÊÔ]+)/) || [])[1] || '';
-    $('#sheet').innerHTML = `<div class="sheet-head"><div><span class="eyebrow" style="color:var(--bad);">Resposta a Incidentes · ${sc.building}</span><h3>Central de Resposta · TI MVV</h3></div><button class="btn" id="closeModal" type="button">✕</button></div>
+    $('#sheet').innerHTML = `<div class="sheet-head"><div><span class="dz-case red">${dzCase(sc).replace('MVV', 'INC')}</span><span class="eyebrow" style="color:var(--bad);">Resposta a Incidentes · ${sc.building}</span><h3>Central de Resposta · TI MVV</h3></div><button class="btn" id="closeModal" type="button">✕</button></div>
       <div class="ph-banner sm"><img src="${PH.resp}" alt="Wagner, Carlos e Thiago na sala de resposta a incidentes"></div>
       <div class="rs-team">${RESP.map((r, k) => `<div class="rs-m ${k === Math.min(i, 2) ? 'on' : k < i ? 'ok' : ''}"><span class="rs-av">${respAvatar(k)}</span><b>${r.name}</b><small>${r.sub}</small></div>`).join('')}</div>
       <div class="soc" id="socLog" data-lvl="${(a.spread || 0) < 35 ? 0 : a.spread < 70 ? 1 : 2}">${(a.log || []).slice(-10).map((l) => `<div class="${l.c}">${l.t}</div>`).join('')}</div>
@@ -4196,6 +4336,26 @@ function tickSpread(dt) {
     }); }).observe(document.body, { childList: true, subtree: true, characterData: true });
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start); else start();
+})();
+</script>
+<script>
+(function () {
+  var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var sheet = document.getElementById('sheet');
+  if (sheet) { sheet.setAttribute('role', 'dialog'); sheet.setAttribute('aria-modal', 'true'); }
+  var t = document.getElementById('toast'); if (t) { t.setAttribute('role', 'status'); t.setAttribute('aria-live', 'polite'); }
+  var m = document.getElementById('missionText'); if (m) m.setAttribute('aria-live', 'polite');
+  function enhance(root) {
+    if (!root || root.nodeType !== 1) return;
+    var list = root.matches && root.matches('.hs') ? [root] : [];
+    list = list.concat([].slice.call(root.querySelectorAll ? root.querySelectorAll('.hs:not([tabindex])') : []));
+    list.forEach(function (el) { if (el.hasAttribute('tabindex')) return; el.setAttribute('tabindex', '0'); el.setAttribute('role', 'button');
+      el.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); el.click(); } }); });
+    if (reduce) [].slice.call(root.querySelectorAll ? root.querySelectorAll('video.tw-bg, video.scene') : []).forEach(function (v) { try { v.removeAttribute('autoplay'); v.loop = false; v.pause(); } catch (e) {} });
+  }
+  enhance(document.body);
+  new MutationObserver(function (ms) { ms.forEach(function (x) { x.addedNodes.forEach(enhance); }); }).observe(document.body, { childList: true, subtree: true });
+  document.addEventListener('click', function (e) { var c = e.target.closest && e.target.closest('.cartnote'); if (c) c.classList.toggle('open'); });
 })();
 </script>
 </body>
