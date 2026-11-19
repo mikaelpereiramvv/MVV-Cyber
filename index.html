@@ -1043,6 +1043,30 @@
     .brief .rs-av img { width: 100%; height: 100%; object-fit: cover; }
     .brief-say small { display: block; margin-bottom: 4px; font: 700 11px var(--dz-sans); letter-spacing: 1.2px; text-transform: uppercase; color: var(--dz-red); }
     .brief-say small b { color: var(--dz-ink); }
+
+    /* ===== v20 · enquadramento das cenas (revisão externa conferida) ===== */
+    /* Aeroporto: a área da tela vira "prova marcada" e ganha uma ampliação, como lupa no dossiê */
+    .ph-aero .aero-scr { outline: 2px dashed rgba(255,214,90,.95); outline-offset: 2px; }
+    .ph-aero .as-wifi { right: 6%; bottom: 15%; width: 70%; font-size: clamp(5px, 1.4vw, 7.5px); padding: 3px 4px; }
+    .dz-loupe { position: absolute; right: 3%; top: 4%; width: 47%; aspect-ratio: 16 / 10.5; z-index: 5; background: #fbf7ec; padding: 5px 5px 18px; transform: rotate(2deg);
+      box-shadow: 0 6px 14px rgba(0,0,0,.55); }
+    .dz-loupe::before { content: ""; position: absolute; top: -8px; left: 38%; width: 46px; height: 14px; background: var(--dz-tape); transform: rotate(-4deg); }
+    .dz-loupe::after { content: "AMPLIAÇÃO DA TELA"; position: absolute; left: 6px; right: 6px; bottom: 3px; font: 600 9.5px var(--dz-sans); letter-spacing: .6px; color: var(--dz-ink-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .dz-loupe .aero-scr { position: relative; left: auto; top: auto; width: 100%; height: 100%; outline: 0; }
+    .dz-loupe .as-wifi { right: 4%; bottom: 14%; width: 88%; font-size: clamp(7.5px, 2vw, 10px); padding: 4px 5px; gap: 2px; border-radius: 3px; }
+    .dz-loupe .as-wifi span { padding: 2px 4px; }
+    .as-wifi span { gap: 4px; white-space: nowrap; overflow: hidden; } .as-wifi em { flex: none; font-size: .78em; }
+    .dz-loupe .as-bar i { width: 6px; height: 6px; }
+    /* Refeitório: o QR Code parece um adesivo colado por cima do cartaz (como diz a legenda) */
+    .qr-ov { mix-blend-mode: normal; opacity: 1; filter: drop-shadow(.6px 1.2px 1.2px rgba(0,0,0,.5)); }
+    .qr-ov rect:first-child { opacity: .95; }
+    /* CFTV: a faixa vermelha sobe para o topo e não cobre mais os pés do intruso */
+    .crx-cctv2 .lb { top: 30px; bottom: auto; font-size: 11px; }
+    .crx-cctv2 .osd.bl { bottom: 8px; }
+    @media (prefers-reduced-motion: reduce) { .dz-loupe { transform: none; } }
+
+    /* Wi-Fi centralizado na tela do notebook (foto e ampliação) */
+    .ph-aero .as-wifi, .dz-loupe .as-wifi { right: auto; bottom: auto; left: 50%; top: 45%; transform: translate(-50%, -50%); width: 82%; }
 </style>
 <script>window.DZ_IC = {"moon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linejoin=\"round\"><path d=\"M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5z\"/></svg>", "sun": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linecap=\"round\"><circle cx=\"12\" cy=\"12\" r=\"4.2\"/><path d=\"M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8\"/></svg>", "snd": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M4 9h4l5-4v14l-5-4H4z\"/><path d=\"M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12\"/></svg>", "mute": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M4 9h4l5-4v14l-5-4H4z\"/><path d=\"M17 9l5 6M22 9l-5 6\"/></svg>", "book": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linejoin=\"round\"><path d=\"M5 3h12a2 2 0 0 1 2 2v16H7a2 2 0 0 1-2-2z\"/><path d=\"M5 17a2 2 0 0 1 2-2h12M9 7h6\"/></svg>", "gyro": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"m15.5 8.5-2 5-5 2 2-5z\"/></svg>"};</script>
 <script>
@@ -4356,6 +4380,18 @@ function tickSpread(dt) {
   enhance(document.body);
   new MutationObserver(function (ms) { ms.forEach(function (x) { x.addedNodes.forEach(enhance); }); }).observe(document.body, { childList: true, subtree: true });
   document.addEventListener('click', function (e) { var c = e.target.closest && e.target.closest('.cartnote'); if (c) c.classList.toggle('open'); });
+})();
+</script>
+<script>
+(function () {
+  function loupe(root) {
+    if (!root || root.nodeType !== 1 || !root.querySelectorAll) return;
+    var list = root.matches && root.matches('.ph-aero') ? [root] : [].slice.call(root.querySelectorAll('.ph-aero'));
+    list.forEach(function (ph) { if (ph.querySelector('.dz-loupe')) return; var scr = ph.querySelector('.aero-scr'); if (!scr) return;
+      var l = document.createElement('div'); l.className = 'dz-loupe'; l.setAttribute('aria-hidden', 'true'); l.appendChild(scr.cloneNode(true)); ph.appendChild(l); });
+  }
+  loupe(document.body);
+  new MutationObserver(function (ms) { ms.forEach(function (x) { x.addedNodes.forEach(loupe); }); }).observe(document.body, { childList: true, subtree: true });
 })();
 </script>
 </body>
